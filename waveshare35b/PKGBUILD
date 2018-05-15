@@ -1,0 +1,37 @@
+# Maintainer: He Yangxuan <yangxuan8282@gmail.com>
+pkgname=waveshare35b
+pkgver=20180331
+pkgrel=2
+pkgdesc="Waveshare 3.5inch RPi LCD (B) drivers"
+url="http://www.waveshare.net/wiki/3.5inch_RPi_LCD_(B)"
+arch=("armv7h")
+license=("multiple")
+depends=("xf86-input-evdev" "xinput_calibrator" "xf86-video-fbturbo-git")
+install="$pkgname.install"
+source=("http://www.waveshare.net/w/upload/3/34/LCD-show-180331.tar.gz"
+        "$install"
+        "waveshare.txt"
+        "set-orientation")
+
+package() {
+        install -Dm644 waveshare.txt "${pkgdir}"/boot/waveshare.txt
+
+        install -Dm755 set-orientation "${pkgdir}"/usr/bin/set-orientation
+
+        cd "$srcdir"/LCD-show
+        
+        mkdir -p "$pkgdir"/usr/share/X11/xorg.conf.d/
+        mkdir -p "$pkgdir"/etc/X11/xorg.conf.d
+        
+        install -Dm644 waveshare35b-overlay.dtb "${pkgdir}"/boot/overlays/waveshare35b.dtbo
+        
+        cp usr/share/X11/xorg.conf.d/99-fbturbo.conf "${pkgdir}"/usr/share/X11/xorg.conf.d/
+        
+        cp etc/X11/xorg.conf.d/99-calibration.conf-35b "${pkgdir}"/usr/share/X11/xorg.conf.d/99-calibration.conf
+        cp etc/X11/xorg.conf.d/99-calibration.conf-35b* "$pkgdir"/etc/X11/xorg.conf.d/
+}
+
+md5sums=('e8320d3003c6c88eac1f4799705892ed'
+         'd852e82e28e2f328e5e2800c3de277df'
+         '79f6c6ff88e90ce97d92dbb9b119e0e3'
+         'b36feabc653249f049c448b91b7fb5a5')

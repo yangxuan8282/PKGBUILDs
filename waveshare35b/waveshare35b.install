@@ -1,0 +1,13 @@
+post_install() {
+	cp -rf /usr/share/X11/xorg.conf.d/10-evdev.conf /usr/share/X11/xorg.conf.d/45-evdev.conf
+
+	echo "fbcon=map:10 fbcon=font:ProFont6x11 logo.nologo" >> /boot/cmdline.txt
+
+	echo "include waveshare.txt" >> /boot/config.txt
+}
+
+post_remove() {
+	sed -i '/include waveshare.txt/d' /boot/config.txt
+
+	sed -i '/fbcon=map:10 fbcon=font:ProFont6x11 logo.nologo/d' /boot/cmdline.txt
+}
