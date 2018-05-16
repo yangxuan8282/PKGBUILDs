@@ -1,0 +1,33 @@
+# Maintainer: He Yangxuan <yangxuan8282@gmail.com>
+pkgname=basiliskii
+pkgver=1
+pkgrel=1
+pkgdesc="an Open Source 68k Macintosh emulator (SDL2 version)"
+url="https://github.com/DavidLudwig/macemu"
+arch=("armv7h")
+license=("GPL-2.0")
+depends=("sdl2-nox")
+makedepends=("automake" "autoconf" "linux-raspberrypi-headers")
+source=("$pkgname.tar.gz::$url/archive/master.tar.gz")
+
+build() {
+        cd "$srcdir"/macemu-master/BasiliskII/src/Unix
+        msg "Starting build..."
+        
+        export LDFLAGS="$LDFLAGS -Wl,-z,lazy"
+        NO_CONFIGURE=1 ./autogen.sh
+        ./configure --enable-sdl-audio --enable-sdl-framework \
+                --enable-sdl-video --disable-vosf \
+                --without-mon --without-esd --without-gtk --disable-nls --prefix=/usr
+        make
+        strip BasiliskII
+}
+
+package() {
+        cd "$srcdir"/macemu-master/BasiliskII/src/Unix
+
+        make DESTDIR="$pkgdir/" install
+}
+
+
+md5sums=('d16963d419081c9cecaaf74a47814802')
