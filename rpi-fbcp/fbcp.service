@@ -1,0 +1,9 @@
+[Unit]
+Description=Used for mirror primary framebuffer to secondary framebuffer.
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/fbcp
+
+[Install]
+WantedBy=multi-user.target

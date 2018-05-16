@@ -1,0 +1,32 @@
+# Maintainer: He Yangxuan <yangxuan8282@gmail.com>
+pkgname=rpi-fbcp
+pkgver=1
+pkgrel=1
+pkgdesc="Raspberry Pi utility. Used for mirror primary framebuffer to secondary framebuffer"
+url="https://github.com/tasanakorn/rpi-fbcp"
+arch=("armv7h")
+license=("custom:MIT")
+depends=("raspberrypi-firmware")
+makedepends=("cmake" "linux-raspberrypi-headers")
+source=("$pkgname.tar.gz::$url/archive/master.tar.gz"
+        "fbcp.service")
+
+build() {
+        cd "$srcdir"/$pkgname-master
+
+        mkdir build
+        cd build
+        cmake ..
+        make
+}
+
+package() {
+        mkdir -p ${pkgdir}/usr/lib/systemd/system
+        cp "$srcdir"/fbcp.service ${pkgdir}/usr/lib/systemd/system/fbcp.service
+
+        cd "$srcdir"/$pkgname-master
+        install -Dm755 build/fbcp ${pkgdir}/usr/bin/fbcp
+}
+
+md5sums=('93431de02764a84e9c8eb4c4ca15d36d'
+         'bd87483bc5561c5ee6cab5fc97559d1e')
