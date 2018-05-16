@@ -1,12 +1,12 @@
 # Maintainer: He Yangxuan <yangxuan8282@gmail.com>
-pkgname=basiliskii
+pkgname=basiliskii-rpi
 pkgver=1
 pkgrel=1
 pkgdesc="an Open Source 68k Macintosh emulator (SDL2 version)"
 url="https://github.com/DavidLudwig/macemu"
 arch=("armv7h")
 license=("GPL-2.0")
-depends=("sdl2-nox")
+depends=("sdl2-rpi")
 makedepends=("automake" "autoconf" "linux-raspberrypi-headers")
 source=("$pkgname.tar.gz::$url/archive/master.tar.gz")
 
