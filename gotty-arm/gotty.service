@@ -2,6 +2,7 @@
 Description=Share your terminal as a web application
 
 [Service]
+Environment="TERM=xterm"
 ExecStart=/usr/bin/gotty -w ssh alarm@localhost
 
 [Install]
