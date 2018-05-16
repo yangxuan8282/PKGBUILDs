@@ -1,0 +1,20 @@
+# Maintainer: He Yangxuan <yangxuan8282@gmail.com>
+pkgname=gotty
+pkgver=1.0.1
+pkgrel=1
+pkgdesc="Share your terminal as a web application"
+url="https://github.com/yudai/gotty"
+arch=("armv7h")
+license=("MIT")
+depends=("")
+source=("https://github.com/yudai/gotty/releases/download/v1.0.1/gotty_linux_arm.tar.gz"
+        "gotty.service")
+
+package() {
+        install -Dm755 "$srcdir"/$pkgname "$pkgdir"/usr/bin/$pkgname
+        install -Dm644 "$srcdir"/gotty.service "$pkgdir"/usr/lib/systemd/system/gotty.service
+}
+
+
+md5sums=('9d2fbd5d1c8dd6f661307a4b02f8c9b9'
+         '8880497a8243aa9fbc6a19ad20a2c4d5')
